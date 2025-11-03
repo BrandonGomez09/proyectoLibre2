@@ -1,0 +1,45 @@
+name: mis_metas_app
+description: "App para seguimiento de metas."
+
+# Prevenir publicación accidental
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.3.0 <4.0.0' # Asegúrate de cumplir con la versión del PDF (3.35 o sup)
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  shared_preferences: ^2.2.3
+  device_preview: ^1.3.1
+  google_fonts: ^6.2.1
+
+  # Dependencias de tus repositorios:
+  cupertino_icons: ^1.0.8
+
+  # 1. Para Navegación (de 'Navegación 2.0.txt')
+  go_router: ^16.3.0
+
+  # 2. Para Gestión de Estado (de 'HTTP CLIENT.txt')
+  provider: ^6.1.5
+
+  # 3. Para conexión a API (de 'HTTP CLIENT.txt')
+  http: ^1.5.0
+  flutter_dotenv: ^5.1.0
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+
+  # Activa la carpeta de assets para el archivo .env
+  assets:
+    - .env
