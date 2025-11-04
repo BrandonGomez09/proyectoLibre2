@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:mis_metas_app/features/login/domain/entities/user.dart';
 
 enum AuthStatus {
-  authenticated,
-  notAuthenticated,
-  checking
+authenticated,
+notAuthenticated,
+checking
 }
 
 class SessionProvider with ChangeNotifier {
@@ -17,9 +17,9 @@ class SessionProvider with ChangeNotifier {
 
   // Método para cuando el login es EXITOSO
   void login(User user) {
-    _user = user;
-    _authStatus = AuthStatus.authenticated;
-    notifyListeners();
+  _user = user;
+  _authStatus = AuthStatus.authenticated;
+  notifyListeners();
   }
 
   // Método para cerrar sesión

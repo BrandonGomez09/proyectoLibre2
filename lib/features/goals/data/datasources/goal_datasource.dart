@@ -1,21 +1,16 @@
-// lib/features/goals/data/datasources/goal_datasource.dart
-import 'dart:convert'; // <-- 1. CORREGIDO: 'dart:convert'
+import 'dart:convert';
 import 'package:mis_metas_app/core/error/exception.dart';
 import 'package:mis_metas_app/features/goals/data/models/goal_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-// 1. La interfaz (sin cambios)
 abstract class GoalDataSource {
   Future<List<GoalModel>> getGoals(String token);
   Future<GoalModel> createGoal(String title, String description, String token);
 }
 
-// 2. La implementación (modificada)
 class GoalDataSourceImpl implements GoalDataSource {
 
   GoalDataSourceImpl();
-
-  // Función auxiliar para obtener el email del token falso
   String _getEmailFromToken(String token) {
     try {
       return token.substring(23);
@@ -39,7 +34,6 @@ class GoalDataSourceImpl implements GoalDataSource {
         return [];
       }
 
-      // 'json' ahora está definido gracias al import corregido
       final List<dynamic> decodedList = json.decode(goalsString);
 
       return decodedList
@@ -63,20 +57,16 @@ class GoalDataSourceImpl implements GoalDataSource {
       final goalsString = prefs.getString(goalsKey);
       List<dynamic> goalsList = [];
       if (goalsString != null) {
-        goalsList = json.decode(goalsString); // 'json' ahora está definido
+        goalsList = json.decode(goalsString);
       }
 
-      // 2. Crea la nueva meta
       final newGoal = GoalModel(
-        // CORREGIDO: Convertimos el 'int' a 'String'
         id: DateTime.now().millisecondsSinceEpoch.toString(),
         title: title,
         description: description,
       );
 
       goalsList.add(newGoal.toJson());
-
-      // 'json' ahora está definido
       await prefs.setString(goalsKey, json.encode(goalsList));
 
       return newGoal;

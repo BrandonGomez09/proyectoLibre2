@@ -1,4 +1,3 @@
-// lib/features/login/data/datasources/auth_datasource.dart
 import 'dart:convert';
 import 'package:mis_metas_app/core/error/exception.dart';
 import 'package:mis_metas_app/features/login/data/models/user_model.dart';
@@ -10,34 +9,29 @@ abstract class AuthDataSource {
 
 class AuthDataSourceImpl implements AuthDataSource {
 
-  AuthDataSourceImpl(); // Ya no necesita http
+  AuthDataSourceImpl();
 
   @override
   Future<UserModel> login(String email, String password) async {
     final prefs = await SharedPreferences.getInstance();
 
-    // 1. Simula una espera
     await Future.delayed(const Duration(seconds: 1));
 
-    // 2. Busca al usuario
     final userString = prefs.getString('user_$email');
     if (userString == null) {
-      throw ServerException("Credenciales inválidas"); // No existe
+      throw ServerException("Credenciales inválidas");
     }
 
     final userMap = json.decode(userString) as Map<String, dynamic>;
 
-    // 3. Compara la contraseña (simulación)
     final storedPassword = userMap['password'];
     if (storedPassword != 'hashed_$password') {
-      throw ServerException("Credenciales inválidas"); // Contraseña incorrecta
+      throw ServerException("Credenciales inválidas");
     }
 
-    // 4. Crea un nuevo token de sesión
-    final token = 'fake-local-token-for-$email';
+    final token = 'local-token-for-$email';
     await prefs.setString('session_token', token);
 
-    // 5. Devuelve el UserModel (¡con el token!)
     return UserModel(
       id: userMap['id'] as int,
       name: userMap['name'] as String,

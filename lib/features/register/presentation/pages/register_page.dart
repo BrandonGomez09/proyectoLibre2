@@ -1,4 +1,3 @@
-// lib/features/register/presentation/pages/register_page.dart
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mis_metas_app/core/router/routes.dart';
@@ -10,7 +9,6 @@ import 'package:mis_metas_app/shared/widgets/auth_layout.dart';
 import 'package:mis_metas_app/shared/widgets/custom_filled_button.dart';
 import 'package:mis_metas_app/shared/widgets/custom_text_form_field.dart';
 
-// --- 2. CONVIERTE A STATEFULWIDGET ---
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
 
@@ -19,7 +17,6 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  // 3. Controladores para leer el texto
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -32,7 +29,6 @@ class _RegisterPageState extends State<RegisterPage> {
     super.dispose();
   }
 
-  // 4. Función para manejar el registro
   void _handleRegister(RegisterProvider provider) async {
     final name = _nameController.text;
     final email = _emailController.text;
@@ -44,14 +40,11 @@ class _RegisterPageState extends State<RegisterPage> {
       password: password,
     );
 
-    if (!context.mounted) return; // Chequeo de seguridad
+    if (!context.mounted) return;
 
     if (registerOk) {
-      // Si el registro es OK, el router nos redirigirá a Home
-      // (gracias al SessionProvider)
       context.goNamed(AppRoutes.home);
     } else {
-      // Si falla, muestra el error
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(provider.error ?? 'Error desconocido'),
@@ -64,7 +57,6 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    // 5. Escucha al provider
     final provider = Provider.of<RegisterProvider>(context);
 
     return AuthLayout(
@@ -74,28 +66,26 @@ class _RegisterPageState extends State<RegisterPage> {
           Text('Registro', style: textTheme.headlineMedium),
           const SizedBox(height: 24),
 
-          // 6. Conecta los controladores
           CustomTextFormField(
             label: 'Nombre',
             prefixIcon: Icons.person_outline,
-            controller: _nameController, // <-- Conectado
+            controller: _nameController,
           ),
           const SizedBox(height: 16),
           CustomTextFormField(
             label: 'Email',
             prefixIcon: Icons.email_outlined,
-            controller: _emailController, // <-- Conectado
+            controller: _emailController,
           ),
           const SizedBox(height: 16),
           CustomTextFormField(
             label: 'Contraseña',
             prefixIcon: Icons.lock_outline,
             obscureText: true,
-            controller: _passwordController, // <-- Conectado
+            controller: _passwordController,
           ),
           const SizedBox(height: 24),
 
-          // 7. Muestra error si existe
           if (provider.error != null && !provider.isLoading)
             Padding(
               padding: const EdgeInsets.only(bottom: 16.0),
@@ -105,17 +95,16 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
             ),
 
-          // 8. Muestra loading o el botón
           provider.isLoading
               ? const CircularProgressIndicator()
               : CustomFilledButton(
             text: 'Crear Cuenta',
-            onPressed: () => _handleRegister(provider), // <-- Llama a la función
+            onPressed: () => _handleRegister(provider),
           ),
           const SizedBox(height: 16),
           TextButton(
             onPressed: provider.isLoading
-                ? null // Deshabilita si está cargando
+                ? null
                 : () => context.goNamed(AppRoutes.login),
             child: const Text('¿Ya tienes cuenta? Ingresa'),
           )

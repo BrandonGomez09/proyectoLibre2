@@ -4,50 +4,51 @@ import 'package:mis_metas_app/features/register/presentation/pages/register_page
 import 'package:mis_metas_app/features/goals/presentation/pages/home_page.dart';
 import 'package:mis_metas_app/shared/providers/session_provider.dart';
 import 'package:mis_metas_app/core/router/routes.dart';
+
 GoRouter appRouter(SessionProvider sessionProvider) {
-  return GoRouter(
-    initialLocation: AppRoutes.loginPath,
+return GoRouter(
+  initialLocation: AppRoutes.loginPath,
 
-    refreshListenable: sessionProvider,
+  refreshListenable: sessionProvider,
 
-    routes: [
-      GoRoute(
-        path: AppRoutes.loginPath,
-        name: AppRoutes.login,
-        builder: (context, state) => const LoginPage(),
-      ),
-      GoRoute(
+  routes: [
+    GoRoute(
+      path: AppRoutes.loginPath,
+      name: AppRoutes.login,
+      builder: (context, state) => const LoginPage(),
+    ),
+    GoRoute(
         path: AppRoutes.registerPath,
         name: AppRoutes.register,
-        builder: (context, state) => const RegisterPage(),
-      ),
-      GoRoute(
-        path: AppRoutes.homePath,
-        name: AppRoutes.home,
-        builder: (context, state) => const HomePage(),
-      ),
-    ],
+        builder: (context, state) =>
+        const RegisterPage(),
+    ),
+    GoRoute(
+      path: AppRoutes.homePath,
+      name: AppRoutes.home,
+      builder: (context, state) => const HomePage(),
+    ),
+  ],
 
-    // 5. ¡LA LÓGICA DE REDIRECCIÓN!
-    redirect: (context, state) {
-      final authStatus = sessionProvider.authStatus;
-      final location = state.matchedLocation;
+  redirect: (context, state) {
+    final authStatus = sessionProvider.authStatus;
+    final location = state.matchedLocation;
 
-      final publicRoutes = [AppRoutes.loginPath, AppRoutes.registerPath];
+    final publicRoutes = [AppRoutes.loginPath, AppRoutes.registerPath];
 
-      if (authStatus == AuthStatus.notAuthenticated) {
-        if (!publicRoutes.contains(location)) {
-          return AppRoutes.loginPath;
-        }
-      }
+    if (authStatus == AuthStatus.notAuthenticated) {
+    if (!publicRoutes.contains(location)) {
+      return AppRoutes.loginPath;
+    }
+    }
 
-      if (authStatus == AuthStatus.authenticated) {
-        if (publicRoutes.contains(location)) {
-          return AppRoutes.homePath;
-        }
-      }
+    if (authStatus == AuthStatus.authenticated) {
+    if (publicRoutes.contains(location)) {
+      return AppRoutes.homePath;
+    }
+    }
 
-      return null;
-    },
-  );
+    return null;
+  },
+);
 }

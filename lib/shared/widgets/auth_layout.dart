@@ -1,4 +1,3 @@
-// lib/shared/widgets/auth_layout.dart
 import 'package:flutter/material.dart';
 
 class AuthLayout extends StatelessWidget {
@@ -12,7 +11,6 @@ class AuthLayout extends StatelessWidget {
       body: Center(
         child: LayoutBuilder(
           builder: (context, constraints) {
-            // Lógica responsiva de tu repo
             if (constraints.maxWidth < 600) {
               return SingleChildScrollView(
                 child: Padding(
@@ -21,7 +19,6 @@ class AuthLayout extends StatelessWidget {
                 ),
               );
             }
-            // Vista de Tarjeta para Web/Tablets
             return ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 400),
               child: SingleChildScrollView(

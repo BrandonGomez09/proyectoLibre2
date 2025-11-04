@@ -1,4 +1,3 @@
-// lib/features/goals/presentation/providers/goal_provider.dart
 import 'package:flutter/material.dart';
 import 'package:mis_metas_app/features/goals/domain/entities/goal.dart';
 import 'package:mis_metas_app/features/goals/domain/usecases/get_goals.dart';
@@ -8,13 +7,12 @@ import 'package:mis_metas_app/shared/providers/session_provider.dart';
 
 class GoalProvider with ChangeNotifier {
   final GetGoals getGoalsUseCase;
-  // --- 2. AÑADE ---
   final CreateGoal createGoalUseCase;
   final SessionProvider sessionProvider;
 
   GoalProvider({
     required this.getGoalsUseCase,
-    required this.createGoalUseCase, // --- 3. AÑADE ---
+    required this.createGoalUseCase,
     required this.sessionProvider,
   });
 
@@ -27,7 +25,6 @@ class GoalProvider with ChangeNotifier {
   String? get error => _error;
 
   Future<void> fetchGoals() async {
-    // ... (código existente sin cambios) ...
     if (sessionProvider.authStatus != AuthStatus.authenticated) {
       _error = "No estás autenticado.";
       notifyListeners();
@@ -66,7 +63,6 @@ class GoalProvider with ChangeNotifier {
         token: token,
       );
 
-      // Añade la nueva meta a la lista local y notifica
       _goals.insert(0, newGoal);
       notifyListeners();
       return true;

@@ -1,4 +1,3 @@
-// lib/features/login/data/models/user_model.dart
 import 'package:mis_metas_app/features/login/domain/entities/user.dart';
 
 class UserModel extends User {
@@ -9,7 +8,6 @@ class UserModel extends User {
     required super.token,
   });
 
-  // Factory para crear un UserModel desde el JSON de la API
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
       id: json['id'] ?? 0,

@@ -10,6 +10,5 @@ class AppRoutes {
   static const String homePath = '/';
 
   static const String goalDetails = 'goal-details';
-  // Nota: :id es un parámetro que pasaremos
   static const String goalDetailsPath = '/goal/:id';
 }

@@ -1,4 +1,3 @@
-// lib/features/login/presentation/pages/login_page.dart
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mis_metas_app/core/router/routes.dart';
@@ -10,7 +9,6 @@ import 'package:mis_metas_app/shared/widgets/auth_layout.dart';
 import 'package:mis_metas_app/shared/widgets/custom_filled_button.dart';
 import 'package:mis_metas_app/shared/widgets/custom_text_form_field.dart';
 
-// --- 2. CONVIERTE A STATEFULWIDGET ---
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -19,7 +17,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  // 3. Controladores para leer el texto
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -30,20 +27,17 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-  // 4. Función para manejar el login
   void _handleLogin(LoginProvider provider) async {
     final email = _emailController.text;
     final password = _passwordController.text;
 
     final bool loginOk = await provider.attemptLogin(email, password);
 
-    if (!context.mounted) return; // Chequeo de seguridad
+    if (!context.mounted) return;
 
     if (loginOk) {
-      // Si el login es OK, navega a Home
       context.goNamed(AppRoutes.home);
     } else {
-      // Si falla, muestra el error (del provider)
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(provider.error ?? 'Error desconocido'),
@@ -56,7 +50,6 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    // 5. Escucha al provider
     final provider = Provider.of<LoginProvider>(context);
 
     return AuthLayout(
@@ -66,22 +59,20 @@ class _LoginPageState extends State<LoginPage> {
           Text('Login', style: textTheme.headlineMedium),
           const SizedBox(height: 24),
 
-          // 6. Conecta los controladores
           CustomTextFormField(
             label: 'Email',
             prefixIcon: Icons.email_outlined,
-            controller: _emailController, // <-- Conectado
+            controller: _emailController,
           ),
           const SizedBox(height: 16),
           CustomTextFormField(
             label: 'Contraseña',
             prefixIcon: Icons.lock_outline,
             obscureText: true,
-            controller: _passwordController, // <-- Conectado
+            controller: _passwordController,
           ),
           const SizedBox(height: 24),
 
-          // 7. Muestra error si existe
           if (provider.error != null && !provider.isLoading)
             Padding(
               padding: const EdgeInsets.only(bottom: 16.0),
@@ -91,18 +82,17 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
 
-          // 8. Muestra loading o el botón
           provider.isLoading
               ? const CircularProgressIndicator()
               : CustomFilledButton(
             text: 'Ingresar',
-            onPressed: () => _handleLogin(provider), // <-- Llama a la función
+            onPressed: () => _handleLogin(provider),
           ),
 
           const SizedBox(height: 16),
           TextButton(
             onPressed: provider.isLoading
-                ? null // Deshabilita si está cargando
+                ? null
                 : () => context.goNamed(AppRoutes.register),
             child: const Text('¿No tienes cuenta? Regístrate'),
           )

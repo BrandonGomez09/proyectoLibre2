@@ -1,4 +1,3 @@
-// lib/features/login/presentation/providers/login_provider.dart
 import 'package:flutter/material.dart';
 // <-- 1. IMPORTA (Ruta corregida a 'shared/')
 import 'package:mis_metas_app/shared/providers/session_provider.dart';
@@ -7,11 +6,11 @@ import 'package:mis_metas_app/features/login/domain/usecases/login_user.dart';
 
 class LoginProvider with ChangeNotifier {
   final LoginUser loginUserUseCase;
-  final SessionProvider sessionProvider; // <-- 2. AÑADE
+  final SessionProvider sessionProvider;
 
   LoginProvider({
     required this.loginUserUseCase,
-    required this.sessionProvider, // <-- 3. AÑADE
+    required this.sessionProvider,
   });
 
   bool _isLoading = false;
@@ -28,9 +27,7 @@ class LoginProvider with ChangeNotifier {
     try {
       final user = await loginUserUseCase(email, password);
       _isLoading = false;
-
-      // --- 4. AVISA AL SESSION PROVIDER ---
-      sessionProvider.login(user); // ¡Login exitoso!
+      sessionProvider.login(user);
 
       notifyListeners();
       return true;
